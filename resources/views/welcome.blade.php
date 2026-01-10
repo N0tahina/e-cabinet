@@ -5,16 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Cabi-net | Accueil</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
-        body {
+        /* ==========================
+           Reset & Base globale
+        ========================== */
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+        }
+
+        html, body {
             font-family: 'Poppins', sans-serif;
             color: #2e3b4e;
             background-color: #f7f9fb;
+            scroll-behavior: smooth;
         }
 
-        /* Header */
-        .header {
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+        }
+
+        /* ==========================
+           Header & Navigation
+        ========================== */
+        header.header {
             background: linear-gradient(135deg, #0077b6, #0096c7);
             color: white;
             padding: 2rem 0 6rem;
@@ -32,25 +59,26 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
+        .logo span {
+            color: #caf0f8;
+        }
+
         .nav-links {
             list-style: none;
             display: flex;
             gap: 1.5rem;
-            margin: 0;
-            padding: 0;
         }
 
         .nav-links a {
-            color: white;
-            text-decoration: none;
             font-weight: 500;
+            color: white;
             transition: opacity 0.3s ease;
         }
 
@@ -58,17 +86,21 @@
             opacity: 0.8;
         }
 
-        /* Hero section */
+        /* ==========================
+           Hero Section
+        ========================== */
         .hero {
             margin-top: 2rem;
+            text-align: center;
         }
 
         .hero h1 {
             font-size: 2.8rem;
+            font-weight: 700;
             margin-bottom: 1rem;
         }
 
-        .hero span {
+        .hero h1 span {
             color: #caf0f8;
         }
 
@@ -77,15 +109,15 @@
             margin: 0 auto 2rem;
             line-height: 1.6;
             font-weight: 300;
+            font-size: 1rem;
         }
 
         .btn {
+            display: inline-block;
             background-color: #00b4d8;
             color: white;
             padding: 0.8rem 1.8rem;
-            border: none;
             border-radius: 30px;
-            text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
         }
@@ -94,7 +126,9 @@
             background-color: #0096c7;
         }
 
-        /* Features */
+        /* ==========================
+           Features Section
+        ========================== */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -109,9 +143,15 @@
             border-radius: 16px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             padding: 2rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
             text-align: center;
+            cursor: pointer;
+
+            /* Transition uniquement sur la transformation et l’ombre */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+            /* Tout le contenu reste visible dès le départ */
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .feature-card:hover {
@@ -129,16 +169,16 @@
             font-size: 0.95rem;
         }
 
-        /* Modal */
+        /* ==========================
+           Modal
+        ========================== */
         .modal {
             display: none;
             position: fixed;
             z-index: 999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background-color: rgba(30, 30, 30, 0.55);
+            display: flex;
             justify-content: center;
             align-items: center;
             backdrop-filter: blur(4px);
@@ -150,8 +190,8 @@
             border-radius: 12px;
             width: 90%;
             max-width: 400px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
             position: relative;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         .close {
@@ -187,6 +227,14 @@
             box-shadow: 0 0 0 3px rgba(0, 150, 199, 0.2);
         }
 
+        .error {
+            color: red;
+            font-size: 0.85rem;
+        }
+
+        /* ==========================
+           Footer
+        ========================== */
         .footer {
             text-align: center;
             padding: 2rem 0;
@@ -196,16 +244,31 @@
             border-top: 1px solid #e5e7eb;
         }
 
-        .error {
-            color: red;
-            font-size: 0.85rem;
+        /* ==========================
+           Responsive
+        ========================== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
     </style>
 </head>
 <body data-auth="{{ auth()->check() ? 'true' : 'false' }}">
+
+    <!-- Header -->
     <header class="header">
         <nav class="navbar">
-            <div class="logo">🦷 <span style="color:#caf0f8;">E-Cabi-net</span></div>
+            <div class="logo">🦷 <span>E-Cabi-net</span></div>
             <ul class="nav-links">
                 @auth
                     <li><a href="{{ route('dashboard') }}">Mon compte</a></li>
@@ -216,6 +279,7 @@
                 @endauth
             </ul>
         </nav>
+
         <div class="hero">
             <h1>Bienvenue sur <span>E-Cabi-net</span></h1>
             <p>Votre cabinet dentaire en ligne : réservez vos rendez-vous en toute simplicité et en toute sécurité.</p>
@@ -223,20 +287,23 @@
         </div>
     </header>
 
-    <section class="features">
-        <div class="feature-card clickable-card" data-href="{{ route('rendez-vous.index') }}">
-            <h2>📅 Rendez-vous en ligne</h2>
-            <p>Réservez un créneau selon vos disponibilités, en quelques clics.</p>
-        </div>
-        <div class="feature-card">
-            <h2>👨‍⚕️ Suivi personnalisé</h2>
-            <p>Chaque patient bénéficie d’un suivi complet et professionnel.</p>
-        </div>
-        <div class="feature-card">
-            <h2>🔒 Sécurité & Confiance</h2>
-            <p>Vos données sont protégées avec un haut niveau de confidentialité.</p>
-        </div>
-    </section>
+    <!-- Features -->
+    <main>
+        <section class="features">
+            <div class="feature-card clickable-card" data-href="{{ route('rendez-vous.index') }}">
+                <h2>📅 Rendez-vous en ligne</h2>
+                <p>Réservez un créneau selon vos disponibilités, en quelques clics.</p>
+            </div>
+            <div class="feature-card">
+                <h2>👨‍⚕️ Suivi personnalisé</h2>
+                <p>Chaque patient bénéficie d’un suivi complet et professionnel.</p>
+            </div>
+            <div class="feature-card">
+                <h2>🔒 Sécurité & Confiance</h2>
+                <p>Vos données sont protégées avec un haut niveau de confidentialité.</p>
+            </div>
+        </section>
+    </main>
 
     <!-- Modal -->
     <div id="loginModal" class="modal">
@@ -244,7 +311,6 @@
             <span class="close">&times;</span>
             <h2>Connexion requise</h2>
             <p>Veuillez vous connecter pour continuer.</p>
-
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <input type="hidden" name="after_login_redirect" id="after_login_redirect">
@@ -266,12 +332,16 @@
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="footer">
         <p>&copy; {{ date('Y') }} E-Cabi-net. Tous droits réservés.</p>
     </footer>
 
+    <!-- Script -->
     <script>
         window.isAuthenticated = @json(Auth::check());
+
+        console.log(document.querySelector('meta[name="csrf-token"]').content);
 
         document.addEventListener('DOMContentLoaded', function() {
             const modal = document.getElementById('loginModal');
@@ -279,17 +349,15 @@
             const form = modal.querySelector('form');
             const redirectInput = document.getElementById('after_login_redirect');
 
+            modal.style.display = 'none';
+
             document.querySelectorAll('.clickable-card').forEach(card => {
                 card.addEventListener('click', function() {
                     const destination = this.dataset.href;
-
-                    // ✅ Si déjà connecté → redirection directe
                     if (window.isAuthenticated) {
                         window.location.href = destination;
                         return;
                     }
-
-                    // 🚪 Sinon → ouvre le modal et prépare la redirection
                     localStorage.setItem('after_login_redirect', destination);
                     redirectInput.value = destination;
                     modal.style.display = 'flex';
@@ -301,21 +369,17 @@
                 if (e.target === modal) modal.style.display = 'none';
             });
 
-            // Soumission du login via fetch
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-
                 const formData = new FormData(this);
-
                 fetch(this.action, {
                     method: 'POST',
                     headers: {
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': formData.get('_token')
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json'
                     },
-                    body: formData
-                })
-                .then(async res => {
+                    body: new FormData(this)
+                }).then(async res => {
                     if (res.ok) {
                         const redirect = localStorage.getItem('after_login_redirect') || "{{ route('dashboard') }}";
                         localStorage.removeItem('after_login_redirect');
@@ -332,5 +396,6 @@
             });
         });
     </script>
+
 </body>
 </html>
