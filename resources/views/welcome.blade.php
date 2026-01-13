@@ -311,7 +311,7 @@
             <span class="close">&times;</span>
             <h2>Connexion requise</h2>
             <p>Veuillez vous connecter pour continuer.</p>
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('login-store') }}">
                 @csrf
                 <input type="hidden" name="after_login_redirect" id="after_login_redirect">
                 <div class="form-group">
