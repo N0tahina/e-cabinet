@@ -29,6 +29,7 @@
                         <a href="{{ route('login') }}" class="text-gray-700 hover:text-blue-600 font-medium">Connexion</a>
                         <a href="{{ route('register') }}" class="text-gray-700 hover:text-blue-600 font-medium">Inscription</a>
                     @else
+                        <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-blue-600 font-medium">Dashboard</a>
                         <span class="text-gray-700">Bonjour, {{ Auth::user()->nom }}</span>
                         <form method="POST" action="{{ route('logout') }}" class="inline">
                             @csrf
