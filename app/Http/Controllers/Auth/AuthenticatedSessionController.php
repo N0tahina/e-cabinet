@@ -22,6 +22,11 @@ class AuthenticatedSessionController extends Controller
         return view('auth.login');
     }
 
+    public function createDentiste(): View
+    {
+        return view('auth-dentiste.login');
+    }
+
     /**
      * Gérer une tentative de connexion.
      */
