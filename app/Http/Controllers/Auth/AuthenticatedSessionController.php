@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
+use App\Models\Dentiste;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -79,6 +80,44 @@ class AuthenticatedSessionController extends Controller
         }
 
         Log::warning('Échec de connexion : tentative échouée sans raison claire', ['nom' => $typedNom]);
+        return $this->failedResponse($request, 'Les identifiants sont incorrects.');
+    }
+
+    public function storeDentiste(LoginRequest $request)
+    {
+        // 🔍 Debug initial
+        Log::info('Tentative de connexion détectée', [
+            'email' => $request->email,
+        ]);
+
+        // Authentification
+        $typedMail = $request->mail;
+        $typedPassword = $request->mot_de_passe;
+
+        $dentiste = Dentiste::where('email', $typedMail)->first();
+
+        if (!$dentiste) {
+            Log::warning('Échec de connexion : dentiste introuvable', ['email' => $typedMail]);
+            return $this->failedResponse($request, 'Email d’utilisateur introuvable.');
+        }
+
+        if (!Hash::check($typedPassword, $dentiste->mot_de_passe)) {
+            Log::warning('Échec de connexion : mot de passe incorrect', ['email' => $typedMail]);
+            return $this->failedResponse($request, 'Mot de passe incorrect.');
+        }
+
+        if (Auth::attempt(['email' => $typedMail, 'password' => $typedPassword], $request->filled('remember'))) {
+            $request->session()->regenerate();
+
+            // ✅ Journalisation de la connexion
+            Log::info('Connexion réussie', ['user_id' => $dentiste->id, 'email' => $dentiste->email]);
+            // 🔁 Si redirection personnalisée
+
+            // ✅ Redirection par défaut
+            return $this->successfulResponse($request, '/dentiste/dashboard');
+        }
+
+        Log::warning('Échec de connexion : tentative échouée sans raison claire', ['email' => $typedMail]);
         return $this->failedResponse($request, 'Les identifiants sont incorrects.');
     }
 
