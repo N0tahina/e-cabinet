@@ -1,56 +1,47 @@
 @extends('layouts.app')
 
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+@endpush
+
     @section('content')
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    <main class="site-main">
 
-            <!-- Message de bienvenue -->
-            <div class="bg-white shadow-sm rounded-lg p-6">
-                <h3 class="text-lg font-semibold mb-2">Bienvenue 👋</h3>
-                <p class="text-gray-700">
-                    Vous êtes connecté à votre espace patient.  
-                    Ici, vous pourrez bientôt :
-                </p>
+    <section aria-labelledby="welcome" class="section">
+        <header>
+        <h2 id="welcome">Bienvenue 👋</h2>
+        </header>
 
-                <ul class="list-disc list-inside mt-3 text-gray-700">
-                    <li>Demander un rendez-vous</li>
-                    <li>Voir vos rendez-vous</li>
-                    <li>Consulter l’historique</li>
-                </ul>
-            </div>
+        <p>
+        Bienvenue dans votre espace patient.  
+        Vous pouvez ici gérer vos demandes de rendez-vous.
+        </p>
+    </section>
 
-            <!-- Demande de rendez-vous -->
-            <div class="bg-white shadow-sm rounded-lg p-6">
-                <h3 class="text-lg font-semibold mb-3">📅 Demande de rendez-vous</h3>
+    <section aria-labelledby="appointment" class="section">
+        <header>
+        <h2 id="appointment">📅 Demande de rendez-vous</h2>
+        </header>
 
-                <p class="text-gray-700 mb-4">
-                    Cliquez ci-dessous pour envoyer une demande de rendez-vous à un dentiste.
-                </p>
+        <p>
+        Cliquez ci-dessous pour envoyer une demande à un dentiste.
+        </p>
 
-                <a href="#" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                    Demander un rendez-vous
-                </a>
-            </div>
+        <a href="#" class="btn btn-primary">
+        Demander un rendez-vous
+        </a>
+    </section>
 
-            <!-- Mes demandes -->
-            <div class="bg-white shadow-sm rounded-lg p-6">
-                <h3 class="text-lg font-semibold mb-3">📝 Mes demandes</h3>
+    <section aria-labelledby="history" class="section">
+        <header>
+        <h2 id="history">📝 Mes demandes</h2>
+        </header>
 
-                <p class="text-gray-500 italic">
-                    Aucune demande pour le moment.
-                </p>
-            </div>
+        <p class="empty-state">
+        Aucune demande pour le moment.
+        </p>
+    </section>
 
-            <!-- Déconnexion -->
-            <div class="bg-white shadow-sm rounded-lg p-6">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="text-red-600 hover:underline">
-                        Se déconnecter
-                    </button>
-                </form>
-            </div>
+    </main>
 
-        </div>
-    </div>
     @endsection
