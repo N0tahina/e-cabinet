@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 13 jan. 2026 à 07:37
+-- Généré le : jeu. 15 jan. 2026 à 09:29
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -20,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `cabinet`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `cache`
+--
+
+CREATE TABLE `cache` (
+  `key` varchar(255) NOT NULL,
+  `value` longtext NOT NULL,
+  `expiration` bigint(20) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -71,6 +83,13 @@ CREATE TABLE `migrations` (
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Déchargement des données de la table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '0001_01_01_000000_create_users_table', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -92,7 +111,9 @@ CREATE TABLE `rendez_vous` (
 
 INSERT INTO `rendez_vous` (`id`, `user_id`, `dentiste_id`, `date_heure`, `statut`, `commentaire`) VALUES
 (1, 1, 1, '2025-10-17 11:48:00', 0, 'Bonjour je suis M Tets1,\nJ\'aimerais prendre rendez-vous le  17/10/2025 à 14:48'),
-(2, 3, 2, '2025-11-23 10:27:00', 0, 'Rendez-vous molaire');
+(2, 3, 2, '2025-11-23 10:27:00', 0, 'Rendez-vous molaire'),
+(3, 4, 1, '2026-01-14 17:20:00', 0, 'Molaire'),
+(4, 4, 2, '2026-01-15 07:19:00', 0, 'Molaire');
 
 -- --------------------------------------------------------
 
@@ -106,20 +127,8 @@ CREATE TABLE `sessions` (
   `ip_address` varchar(45) DEFAULT NULL,
   `user_agent` text DEFAULT NULL,
   `payload` longtext NOT NULL,
-  `last_activity` int(10) UNSIGNED NOT NULL
+  `last_activity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Déchargement des données de la table `sessions`
---
-
-INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('8v5NsTqcyjak63DxWVm2gGfwFrRkSWlLd9d8IYMQ', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YToyOntzOjY6Il90b2tlbiI7czo0MDoic284ZjRHa09mb0xQSU0wSml5VkVoRHl0Wm00cFllNGhQcE5ydjZhdyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1768043456),
-('kDHg0b8KCvW1hzMQxaYMLJex7aoPiqZEFFADxH8b', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YToyOntzOjY6Il90b2tlbiI7czo0MDoiMG0ydTZsMlZjYTFneGpXVkkzNEJpS2RYS0FKeFpyWWdZWTVWcUpXNyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1768044274),
-('tJy9eKcCyzLcReofGSMQWHbD8xdWGPQFipGhhMPG', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YToyOntzOjY6Il90b2tlbiI7czo0MDoieWVqN1NHZ0diQWhoQnJwMHRsbFp5dnVKZVJPZUVlaHF2Mnd1VWZCSiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1768044582),
-('wFGnKQc35M2ZiQ0CRpaJUdvpi42xnF7gaHRIusDV', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiV1cyNnZaaDM4aHBSSDFnb2V4WWZ5Y0VMN1k2Y2V2U0puaGd4MjZRZiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9yZW5kZXotdm91cyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1768045468),
-('wnqJ4uxdi4kl3MXvpDwvYB9ejPhLyNkE92Aqivj5', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiQks1aU9jOG9mN0RYWTZjV0xTenplQXBNb3lIN1dVbGtBMjY1SG5VNiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9yZW5kZXotdm91cz9kZW50aXN0ZV9pZD0zIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1768061478),
-('xno8LirjGPBP02ffPwI73mIdma2yDNyF9i71rH3q', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YToyOntzOjY6Il90b2tlbiI7czo0MDoiZXB4ODU5ZmxZVmxPWlFZMDdnUWoxWk5CRFVLMzA0a3pwQzExMzdPTyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1768044647);
 
 -- --------------------------------------------------------
 
@@ -149,6 +158,12 @@ INSERT INTO `users` (`id`, `nom`, `mot_de_passe`, `email`, `telephone`, `remembe
 --
 -- Index pour les tables déchargées
 --
+
+--
+-- Index pour la table `cache`
+--
+ALTER TABLE `cache`
+  ADD PRIMARY KEY (`key`);
 
 --
 -- Index pour la table `dentiste`
@@ -183,7 +198,8 @@ ALTER TABLE `rendez_vous`
 --
 ALTER TABLE `sessions`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `sessions_user_id_index` (`user_id`);
+  ADD KEY `sessions_user_id_index` (`user_id`),
+  ADD KEY `sessions_last_activity_index` (`last_activity`);
 
 --
 -- Index pour la table `users`
@@ -200,13 +216,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pour la table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `rendez_vous`
 --
 ALTER TABLE `rendez_vous`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `users`
