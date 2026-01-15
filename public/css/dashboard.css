@@ -1,0 +1,75 @@
+/* =========================
+   BASE SIMPLE & RESPONSIVE
+========================= */
+
+:root {
+  --primary: #2563eb;
+  --bg: #f4f6f8;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --card: #ffffff;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.site-main {
+  padding: 1rem;
+}
+
+/* Sections (cartes) */
+.section {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Titres et paragraphes */
+.section h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.section p {
+  font-size: 1rem;
+}
+
+/* Boutons */
+.btn {
+  display: inline-block;
+  margin-top: 0.8rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+}
+
+.empty-state {
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* Images ou iframes (si tu en mets) */
+img, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
