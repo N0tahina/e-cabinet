@@ -1,0 +1,99 @@
+/* Scope global uniquement à l'espace dentiste */
+.dentiste-layout .layout-container {
+    display: flex;
+    min-height: 100vh;
+    font-family: "Inter", sans-serif;
+    background: #f8f9fa;
+}
+
+/* Sidebar */
+.dentiste-layout .sidebar {
+    width: 240px;
+    background: #1e293b;
+    color: white;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dentiste-layout .sidebar .logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.dentiste-layout .sidebar .menu a {
+    display: block;
+    color: #cbd5e1;
+    text-decoration: none;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.dentiste-layout .sidebar .menu a.active,
+.dentiste-layout .sidebar .menu a:hover {
+    background: #3b82f6;
+    color: white;
+}
+
+.dentiste-layout .logout-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dentiste-layout .logout-btn:hover {
+    background: #b91c1c;
+}
+
+/* Main content */
+.dentiste-layout .main-content {
+    flex: 1;
+    padding: 2rem;
+}
+
+/* Top bar */
+.dentiste-layout .top-bar h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.2rem;
+    color: #111827;
+}
+
+.dentiste-layout .top-bar p {
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+}
+
+/* Page content */
+.dentiste-layout .page-content {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dentiste-layout .layout-container {
+        flex-direction: column;
+    }
+
+    .dentiste-layout .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .dentiste-layout .sidebar .menu a {
+        margin-right: 1rem;
+        margin-bottom: 0;
+        white-space: nowrap;
+    }
+}
